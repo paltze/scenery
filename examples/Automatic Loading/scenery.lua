@@ -172,8 +172,6 @@ function Scenery.init(...)
     -- Loop through the callbacks creating a function with same name on the base class
     for _, value in ipairs(loveCallbacks) do
         this[value] = function(self, ...)
-            assert(type(self.scenes[self.currentscene]) == "table", "Scene '" .. self.currentscene .. "' not a valid scene.")
-
             -- Check if the function exists on the class
             if self.scenes[self.currentscene][value] then
                 self.scenes[self.currentscene][value](self.scenes[self.currentscene], ...)
