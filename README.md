@@ -32,9 +32,9 @@ function love.update(dt)
     scenery:update(dt)
 end
 ```
-> :memo: Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
+> Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
 
-> :alert: You must call all the callbacks with Love2D which you intend to use in your scenes.
+> You must call all the callbacks with Love2D which you intend to use in your scenes.
 
 ### Scenes
 
@@ -70,9 +70,9 @@ local SceneryInit = require("path.to.scenery")
 local scenery = SceneryInit("scene", "path/to/scenes")
 ```
 
-> :memo: The filename of the file (without the extension) containing scene will be considered the scene key.
+> The filename of the file (without the extension) containing scene will be considered the scene key.
 
-> :alert: If you file name has periods (.) before the file extension (eg `game.scene.lua`) then only the string before the first period (ie `game` in the above case) will be considered the scene key.
+> If your file name has periods (.) before the file extension (eg `game.scene.lua`) then only the string before the first period (ie `game` in the above case) will be considered the scene key.
 
 #### Manual Loading
 
@@ -96,7 +96,7 @@ local scenery = SceneryInit(
 
 ### Changing Scenes
 
-Changing scenes in Scenery is very simple. Scenery creates a global `setScene` function to change scenes. The function accepts scene key as first parameter and an optional argument which will to passed to the `load` callback of the new scene. It is as simple as:
+Changing scenes in Scenery is very simple. Scenery creates a global `setScene` function to change scenes. The function accepts scene key as first parameter and an optional argument which will be passed to the `load` callback of the new scene. It is as simple as:
 
 ```lua
 setScene("menu", { score = 52 })
@@ -105,9 +105,23 @@ setScene("menu", { score = 52 })
 Then you can access the score in menu scene by:
 ```lua
 function menu:load(args)
-    print(args.score)
+    print(args.score) -- prints 52
 end
 ```
+
+### Pausing Scenes
+
+You can pause the scene by setting the scene's `paused` property to `true` and vice-versa.
+
+eg:
+```lua
+local scene = {}
+
+scene.paused = true
+
+return scene
+```
+While being paused instead of `draw` the `pause` function is used for drawing.
 
 ## Examples
 
@@ -119,7 +133,8 @@ This repository contains an `example` folder with the many working examples. It 
 - [X] Communicate between the scenes.
 - [X] Automatically load the scenes.
 - [X] Add more examples.
-- [ ] Pausing and playing scenes.
+- [X] Pausing and playing scenes.
+- [ ] Automatically call love callbacks.
 
 ## Contributing
 

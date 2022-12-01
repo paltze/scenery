@@ -1,6 +1,6 @@
 local Scenery = {
     __NAME = "Scenery";
-    __VERSION = "0.2";
+    __VERSION = "0.3";
     __DESCRIPTION = "Scenery - A dead simple Love2D SceneManager";
     __LICENSE = [[
         MIT License
@@ -120,6 +120,10 @@ function Scenery.init(...)
         error("Unknown token '" .. config[1] .. "'", 2)
     end
 
+    for _, value in pairs(this.scenes) do
+        value["paused"] = false
+    end
+
     -- Create a global function to change scenes
     function _G.setScene(key, data)
         assert(this.scenes[key], "No such scene '" .. key .. "'")
@@ -133,7 +137,6 @@ function Scenery.init(...)
     local loveCallbacks = {
         "directorydropped";
         "displayrotated";
-        "draw";
         "errhand";
         "errorhandler";
         "filedropped";
@@ -158,7 +161,7 @@ function Scenery.init(...)
         "quit";
         "resize";
         "run";
-        "textedit";
+        "textedited";
         "textinput";
         "threaderror";
         "touchmoved";
@@ -178,6 +181,17 @@ function Scenery.init(...)
             if self.scenes[self.currentscene][value] then
                 self.scenes[self.currentscene][value](self.scenes[self.currentscene], ...)
             end
+        end
+    end
+
+    this["draw"] = function (self, ...)
+        assert(type(self.scenes[self.currentscene]) == "table", "Scene '" .. self.currentscene .. "' not a valid scene.")
+
+        -- Check if the scene paused
+        if self.scenes[self.currentscene]["draw"] and not self.scenes[self.currentscene]["paused"] then
+            self.scenes[self.currentscene]["draw"](self.scenes[self.currentscene], ...)
+        elseif self.scenes[self.currentscene]["draw"] and self.scenes[self.currentscene]["paused"] then
+            self.scenes[self.currentscene]["pause"](self.scenes[self.currentscene], ...)
         end
     end
 
