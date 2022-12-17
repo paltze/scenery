@@ -2,7 +2,7 @@
 
 ![image](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua)
 ![image](https://img.shields.io/static/v1?label=L%C3%B6ve2D&message=11.4&labelColor=e64998&color=28abe3&style=for-the-badge)
-
+![image](https://img.shields.io/badge/Version-0.3.1-blue?style=for-the-badge)
 Scenery is a dead simple SceneManager for Love2D. Love2D does not have a built in scene system and for someone who comes from [`Phaser`](https://phaser.io) that seemed to be a big gap in a game library so complete. Therefore to fill that gap I implemented this simple library.
 
 Scenes are to games what acts are to plays. You may also think of them as Game State. Lets say, for example, after completing a level you want to display the score to player. Normally you would stop running the code that renders the game and run the code that draws the score instead. But that can quickly become both cumbersome and messy as the game becomes more and more complex. Scenes to the rescue. With scenes there can be a better approach to this. In the above example you just divide your game into two scenes: `Game` and `Score`. You first run the `Game` scene and after game over switch over to the `Score` scene. As simple as that.

@@ -1,6 +1,6 @@
 local Scenery = {
     __NAME = "Scenery";
-    __VERSION = "0.3";
+    __VERSION = "0.3.1";
     __DESCRIPTION = "Scenery - A dead simple Love2D SceneManager";
     __LICENSE = [[
         MIT License
@@ -179,7 +179,7 @@ function Scenery.init(...)
 
             -- Check if the function exists on the class
             if self.scenes[self.currentscene][value] then
-                self.scenes[self.currentscene][value](self.scenes[self.currentscene], ...)
+                return self.scenes[self.currentscene][value](self.scenes[self.currentscene], ...)
             end
         end
     end
