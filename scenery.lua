@@ -120,12 +120,8 @@ function Scenery.init(...)
         error("Unknown token '" .. config[1] .. "'", 2)
     end
 
-    for _, value in pairs(this.scenes) do
-        value["paused"] = false
-    end
-
-    -- Create a global function to change scenes
-    function _G.setScene(key, data)
+    -- This function is available for all scene.
+    function this.setScene(key, data)
         assert(this.scenes[key], "No such scene '" .. key .. "'")
         this.currentscene = key
         if this.scenes[this.currentscene].load then
@@ -133,44 +129,16 @@ function Scenery.init(...)
         end
     end
 
+    for _, value in pairs(this.scenes) do
+        value["setScene"] = this.setScene
+        value["paused"] = false
+    end
+    
     -- All the callbacks available in Love 11.4 as described on https://love2d.org/wiki/Category:Callbacks
-    local loveCallbacks = {
-        "directorydropped";
-        "displayrotated";
-        "errhand";
-        "errorhandler";
-        "filedropped";
-        "focus";
-        "gamepadaxis";
-        "gamepadpressed";
-        "gamepadreleased";
-        "joystickadded";
-        "joystickaxis";
-        "joystickhat";
-        "joystickpressed";
-        "joystickreleased";
-        "joystickremoved";
-        "keypressed";
-        "keyreleased";
-        "load";
-        "lowmemory";
-        "mousefocus";
-        "mousemoved";
-        "mousepressed";
-        "mousereleased";
-        "quit";
-        "resize";
-        "run";
-        "textedited";
-        "textinput";
-        "threaderror";
-        "touchmoved";
-        "touchpressed";
-        "touchreleased";
-        "update";
-        "visible";
-        "wheelmoved";
-    }
+    local loveCallbacks = { "load", "draw", "update" } -- Execpt these three.
+    for k in pairs(love.handlers) do
+        table.insert(loveCallbacks, k)
+	end
 
     -- Loop through the callbacks creating a function with same name on the base class
     for _, value in ipairs(loveCallbacks) do
@@ -192,6 +160,22 @@ function Scenery.init(...)
             self.scenes[self.currentscene]["draw"](self.scenes[self.currentscene], ...)
         elseif self.scenes[self.currentscene]["draw"] and self.scenes[self.currentscene]["paused"] then
             self.scenes[self.currentscene]["pause"](self.scenes[self.currentscene], ...)
+        end
+    end
+
+    -- Inject callbacks into a table. Examples:
+    -- scenery:hook(love)
+    -- scenery:hook(love, { 'load', 'update', 'draw' })
+    function this.hook(self, t, keys)
+        assert(type(t) == "table", "Given param is not a table")
+        local registry = {}
+        keys = keys or loveCallbacks
+        for _, f in pairs(keys) do
+            registry[f] = t[f] or function() end
+            t[f] = function(...)
+                registry[f](...)
+                return self[f](self, ...)
+            end
         end
     end
 
