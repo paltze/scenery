@@ -135,7 +135,7 @@ function Scenery.init(...)
     end
     
     -- All the callbacks available in Love 11.4 as described on https://love2d.org/wiki/Category:Callbacks
-    local loveCallbacks = { "load", "draw", "update" } -- Execpt these three.
+    local loveCallbacks = { "draw", "update" } -- Execpt these three.
     for k in pairs(love.handlers) do
         table.insert(loveCallbacks, k)
 	end
