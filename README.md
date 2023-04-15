@@ -1,12 +1,12 @@
-# Scenery - A dead simple Love2D SceneManager
+# Scenery - A dead simple Love2D Scene/State Manager
 
 ![image](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua)
 ![image](https://img.shields.io/static/v1?label=L%C3%B6ve2D&message=11.4&labelColor=e64998&color=28abe3&style=for-the-badge)
 ![image](https://img.shields.io/badge/Version-0.4-blue?style=for-the-badge)
 
-Scenery is a dead simple SceneManager for Love2D. Love2D does not have a built in scene system and for someone who comes from [`Phaser`](https://phaser.io) that seemed to be a big gap in a game library so complete. Therefore to fill that gap I implemented this simple library.
+Scenery is a dead simple Scene/State Manager for Love2D.
 
-Scenes are to games what acts are to plays. You may also think of them as Game State. Lets say, for example, after completing a level you want to display the score to player. Normally you would stop running the code that renders the game and run the code that draws the score instead. But that can quickly become both cumbersome and messy as the game becomes more and more complex. Scenes to the rescue. With scenes there can be a better approach to this. In the above example you just divide your game into two scenes: `Game` and `Score`. You first run the `Game` scene and after game over switch over to the `Score` scene. As simple as that.
+Scenes (or States) are a very popular organising system for games. Scenery is a simple to use and lightweight implementation of the system for Love2D.
 
 ## Installation
 
@@ -14,21 +14,39 @@ Just grab the `scenery.lua` from this repository and `require` it in you `main.l
 
 ## Usage
 
-After initialization of Scenery (described in detail below) just call the `hook` method on the returned instance.
+After initialization of Scenery (described in detail below) just call the used callbacks in corresponding Love2D callbacks.
 
 For example:
 ```lua
 local SceneryInit = require("path.to.scenery")
 local scenery = SceneryInit(...)
-scenery:hook(love)
+
+function love.load()
+    scenery:load()
+end
+
+function love.draw()
+    scenery:draw()
+end
+
+function love.update(dt)
+    scenery:update(dt)
+end
 ```
+Also, the `scenery` instance has a `hook` method on it, which will do the boilerplate for you. The above example can be shortened as:
+```lua
+local SceneryInit = require("path.to.scenery")
+local scenery = SceneryInit(...)
+scenery:hook(lua)
+```
+
 > Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
 
 > The `hook` method optionally accepts a second argument, a table, with the callbacks which will be hooked. eg `{ "load", "draw", "update" }`
 
 ### Scenes
 
-Scenes are, at the basic level, just tables returned by a file. In Scenery each scene must have a separate file for itself and return a table containing all the callback methods. Scene callbacks methods are exactly the same as Love callback methods, except `load`, which has an optional argument containing data transferred by other scenes.
+Scenes are, in Scenery, just tables returned by a file. Each scene must have a separate file for itself and return a table containing all the callback methods. Scene callbacks methods are exactly the same as Love callback methods, except `load`, which has an optional argument containing data transferred by other scenes.
 
 An Example Scene:
 ```lua
@@ -66,7 +84,7 @@ local scenery = SceneryInit("scene", "path/to/scenes")
 
 #### Manual Loading
 
-If you, however, consider yourself a tad bit more hardworking than rest of the people, you can manually load you scenes. The function returned by `scenery.lua` can accept multiple tables, each for one scene.
+Scenery can also manually load you scenes. The function returned by `scenery.lua` can accept multiple tables, each for one scene.
 You can have the following properties in the table:
 
 Property | Description
@@ -127,6 +145,7 @@ This repository contains an `example` folder with the working examples. It might
 - [X] Add more examples.
 - [X] Pausing and playing scenes.
 - [X] Automatically call love callbacks.
+- [ ] Take tables as scenes
 
 ## Contributing
 
