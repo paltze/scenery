@@ -24,7 +24,7 @@ scenery:hook(love)
 ```
 > Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
 
-> The `hook` method optionally accepts a second argument, a table, with the callbacks which will be hooked. eg `{ load, draw, update }`
+> The `hook` method optionally accepts a second argument, a table, with the callbacks which will be hooked. eg `{ "load", "draw", "update" }`
 
 ### Scenes
 
