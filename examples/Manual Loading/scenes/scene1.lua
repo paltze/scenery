@@ -12,7 +12,7 @@ function scene1:update(dt)
     self.counter = self.counter + dt
 
     if self.counter > 5 then
-        setScene("scene2")
+        self.setScene("scene2")
     end
 end
 

@@ -12,7 +12,7 @@ function scene1:update()
     self.counter = self.counter + 1
 
     if self.counter > 500 then
-        setScene("scene2", self.counter)
+        self.setScene("scene2", self.counter)
     end
 end
 

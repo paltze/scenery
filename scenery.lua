@@ -1,11 +1,11 @@
 local Scenery = {
     __NAME = "Scenery";
-    __VERSION = "0.3.1";
+    __VERSION = "0.4";
     __DESCRIPTION = "Scenery - A dead simple Love2D SceneManager";
     __LICENSE = [[
         MIT License
 
-        Copyright (c) 2022 Paltze
+        Copyright (c) 2023 Paltze and Contributors
 
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal

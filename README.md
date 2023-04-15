@@ -2,7 +2,7 @@
 
 ![image](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua)
 ![image](https://img.shields.io/static/v1?label=L%C3%B6ve2D&message=11.4&labelColor=e64998&color=28abe3&style=for-the-badge)
-![image](https://img.shields.io/badge/Version-0.3.1-blue?style=for-the-badge)
+![image](https://img.shields.io/badge/Version-0.4-blue?style=for-the-badge)
 
 Scenery is a dead simple SceneManager for Love2D. Love2D does not have a built in scene system and for someone who comes from [`Phaser`](https://phaser.io) that seemed to be a big gap in a game library so complete. Therefore to fill that gap I implemented this simple library.
 
@@ -14,28 +14,17 @@ Just grab the `scenery.lua` from this repository and `require` it in you `main.l
 
 ## Usage
 
-After initialization of Scenery (described in detail below) just call the used callbacks in corresponding Love2D callbacks.
+After initialization of Scenery (described in detail below) just call the `hook` method on the returned instance.
 
 For example:
 ```lua
 local SceneryInit = require("path.to.scenery")
 local scenery = SceneryInit(...)
-
-function love.load()
-    scenery:load()
-end
-
-function love.draw()
-    scenery:draw()
-end
-
-function love.update(dt)
-    scenery:update(dt)
-end
+scenery:hook(love)
 ```
 > Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
 
-> You must call all the callbacks with Love2D which you intend to use in your scenes.
+> The `hook` method optionally accepts a second argument, a table, with the callbacks which will be hooked. eg `{ load, draw, update }`
 
 ### Scenes
 
@@ -97,15 +86,17 @@ local scenery = SceneryInit(
 
 ### Changing Scenes
 
-Changing scenes in Scenery is very simple. Scenery creates a global `setScene` function to change scenes. The function accepts scene key as first parameter and an optional argument which will be passed to the `load` callback of the new scene. It is as simple as:
+Changing scenes in Scenery is very simple. Scenery creates a `setScene` method on the scene table to change scenes. The function accepts scene key as first parameter and an optional argument which will be passed to the `load` callback of the new scene. It is as simple as:
 
 ```lua
-setScene("menu", { score = 52 })
+function scene1:load()
+    self.setScene("scene2", { score = 52 })
+end
 ```
 
 Then you can access the score in menu scene by:
 ```lua
-function menu:load(args)
+function scene2:load(args)
     print(args.score) -- prints 52
 end
 ```
@@ -126,7 +117,7 @@ While being paused instead of `draw` the `pause` function is used for drawing.
 
 ## Examples
 
-This repository contains an `example` folder with the many working examples. It is best to see them at least once to get a better understanding of the library.
+This repository contains an `example` folder with the working examples. It might be consulted in case of non-clarity.
 
 ## Roadmap
 
@@ -135,7 +126,7 @@ This repository contains an `example` folder with the many working examples. It 
 - [X] Automatically load the scenes.
 - [X] Add more examples.
 - [X] Pausing and playing scenes.
-- [ ] Automatically call love callbacks.
+- [X] Automatically call love callbacks.
 
 ## Contributing
 
