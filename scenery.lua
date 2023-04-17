@@ -121,11 +121,11 @@ function Scenery.init(...)
     end
 
     -- This function is available for all scene.
-    function this.setScene(key, data)
+    function this.setScene(key, ...)
         assert(this.scenes[key], "No such scene '" .. key .. "'")
         this.currentscene = key
         if this.scenes[this.currentscene].load then
-            this.scenes[this.currentscene]:load(data)
+            this.scenes[this.currentscene]:load(...)
         end
     end
 
