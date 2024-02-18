@@ -44,7 +44,19 @@ local autoLoad = function(directory)
         local file, ext = split(value, ".")
 
         -- Require scene
-        if ext == "lua" and file ~= "conf" and file ~= "main" then
+        if ext == file then
+            local info = love.filesystem.getInfo(directory .. "/" .. file)
+
+            -- Check if item is a directory
+            if info and (info.type == "directory" or info.type == "symlink") then
+                info = love.filesystem.getInfo(directory .. "/" .. file .. "/init.lua")
+
+                -- Check for the init file
+                if info and info.type == "file" then
+                    scenes[file] = require(directory .. "." .. file)
+                end
+            end
+        elseif ext == "lua" and file ~= "conf" and file ~= "main" then
             scenes[file] = require(directory .. "." .. file)
         end
     end
