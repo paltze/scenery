@@ -5,7 +5,7 @@ local Scenery = {
     __LICENSE = [[
         MIT License
 
-        Copyright (c) 2023 Paltze and Contributors
+        Copyright (c) 2024 Paltze and Contributors
 
         Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
@@ -143,7 +143,6 @@ function Scenery.init(...)
 
     for _, value in pairs(this.scenes) do
         value["setScene"] = this.setScene
-        value["paused"] = false
     end
     
     -- All the callbacks available in Love 11.4 as described on https://love2d.org/wiki/Category:Callbacks
@@ -161,17 +160,6 @@ function Scenery.init(...)
             if self.scenes[self.currentscene][value] then
                 return self.scenes[self.currentscene][value](self.scenes[self.currentscene], ...)
             end
-        end
-    end
-
-    this["draw"] = function (self, ...)
-        assert(type(self.scenes[self.currentscene]) == "table", "Scene '" .. self.currentscene .. "' not a valid scene.")
-
-        -- Check if the scene paused
-        if self.scenes[self.currentscene]["draw"] and not self.scenes[self.currentscene]["paused"] then
-            self.scenes[self.currentscene]["draw"](self.scenes[self.currentscene], ...)
-        elseif self.scenes[self.currentscene]["draw"] and self.scenes[self.currentscene]["paused"] then
-            self.scenes[self.currentscene]["pause"](self.scenes[self.currentscene], ...)
         end
     end
 

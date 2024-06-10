@@ -1,8 +1,6 @@
 # Scenery - A dead simple Love2D Scene/State Manager
 
-![image](https://img.shields.io/badge/Lua-2C2D72?style=for-the-badge&logo=lua)
-![image](https://img.shields.io/static/v1?label=L%C3%B6ve2D&message=11.4&labelColor=e64998&color=28abe3&style=for-the-badge)
-![image](https://img.shields.io/badge/Version-0.4-blue?style=for-the-badge)
+![image](https://img.shields.io/static/v1?label=L%C3%B6ve2D&message=11.5&labelColor=e64998&color=28abe3&style=for-the-badge)
 
 Scenery is a dead simple Scene/State Manager for Love2D.
 
@@ -40,7 +38,7 @@ local scenery = SceneryInit(...)
 scenery:hook(lua)
 ```
 
-> Scenery supports all the Love2D 11.4 [callbacks](https://love2d.org/wiki/Category:Callbacks).
+> Scenery supports all [Love2D 11.5 callbacks](https://love2d.org/wiki/Category:Callbacks).
 
 > The `hook` method optionally accepts a second argument, a table, with the callbacks which will be hooked. eg `{ "load", "draw", "update" }`
 
@@ -80,7 +78,7 @@ local scenery = SceneryInit("scene", "path/to/scenes")
 
 > The filename of the file (without the extension) containing scene will be considered the scene key.
 
-> If your file name has periods (.) before the file extension (eg `game.scene.lua`) then only the string before the first period (ie `game` in the above case) will be considered the scene key.
+> ⚠️ If your file name has periods (.) before the file extension (eg `game.scene.lua`) then only the string before the first period (ie `game` in the above case) will be considered the scene key.
 
 #### Manual Loading
 
@@ -119,37 +117,9 @@ function scene2:load(args)
 end
 ```
 
-### Pausing Scenes
-
-You can pause the scene by setting the scene's `paused` property to `true` and vice-versa.
-
-eg:
-```lua
-local scene = {}
-
-scene.paused = true
-
-return scene
-```
-While being paused instead of `draw` the `pause` function is used for drawing.
-
-## Examples
-
-This repository contains an `example` folder with the working examples. It might be consulted in case of non-clarity.
-
-## Roadmap
-
-- [X] Support all Love2D callbacks.
-- [X] Communicate between the scenes.
-- [X] Automatically load the scenes.
-- [X] Add more examples.
-- [X] Pausing and playing scenes.
-- [X] Automatically call love callbacks.
-- [ ] Take tables as scenes
-
 ## Contributing
 
-If you found any bug or have any suggestion, feel free to open an issue. If you solved a bug or added a new feature feel free to add a pull request and I will be happy to merge it.
+If you have found a bug or have any suggestion, feel free to open an issue. If you fixed a bug or added a new feature, add a pull request.
 
 ## License
 
