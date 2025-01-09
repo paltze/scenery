@@ -35,7 +35,7 @@ Also, the `scenery` instance has a `hook` method on it, which will do the boiler
 ```lua
 local SceneryInit = require("path.to.scenery")
 local scenery = SceneryInit(...)
-scenery:hook(lua)
+scenery:hook(love)
 ```
 
 > Scenery supports all [Love2D 11.5 callbacks](https://love2d.org/wiki/Category:Callbacks).
